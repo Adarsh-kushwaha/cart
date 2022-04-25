@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import ItemList from "./components/ItemList";
+import Order from "./components/Order";
 import Data from "./data";
 import "./styles.css";
 
@@ -45,10 +47,31 @@ export default function App() {
     storeData(filterdData);
   };
 
+  const resetData = () => {
+    const cartData = Data.map((item) => {
+      return { ...item, qty: 1 };
+    });
+    setData(cartData);
+    storeData(cartData);
+  };
+
   console.log(data);
   return (
     <div className="">
-      <div></div>
+      <button
+        className="p-2 bg-gray-500 rounded-md fixed top-0 left-[1100px]"
+        onClick={resetData}
+      >
+        Reset Data{" "}
+      </button>
+      <div className="flex flex-row ">
+        <div>
+          <ItemList data={data} removeItem={removeItem} changeQty={changeQty} />
+        </div>
+        <div>
+          <Order data={data} />
+        </div>
+      </div>
     </div>
   );
 }
